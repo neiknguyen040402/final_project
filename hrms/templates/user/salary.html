@@ -1,0 +1,67 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Lương: {{ current_user.username }} {% endblock %}
+
+{% block content %}
+
+{% if msg %}
+    <div class="alert alert-warning">{{ msg }}</div>
+{% endif %}
+<div>
+    <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Bảng lương tháng {{ sa[2] }}</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:96px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr>
+</div>
+<br>
+<div class="col-md-5 col-xs-12 mb-3 mt-3">
+    <h4>Tra cứu thông tin lương: </h4>
+    <form class="form-inline">
+        <div class="form-group mr-2">
+            <input type="number" name="month" min="1" max="12" class="form-control" style="width:200px" placeholder="Nhập tháng ...">
+        </div>
+        <div class="form-group mr-2">
+            <input type="number" name="year" min="2000" class="form-control" style="width:200px" placeholder="Nhập năm ...">
+        </div>
+        <input type="submit" value="Tra cứu" class="btn btn-danger">
+    </form>
+</div>
+<br>
+
+<table id="myTable" class="table table-hover table-bordered table-sm">
+<thead>
+    <tr>
+        <th>Lương tháng</th>
+        <th>Tổng số giờ làm</th>
+        <th>Tổng giờ tăng ca</th>
+        <th>Tổng lương trước thuế</th>
+        <th>Bảo hiểm</th>
+        <th>Thuế thu nhập</th>
+        <th>Tạm ứng</th>
+        <th>Thực lãnh</th>
+    </tr>
+</thead>
+<tbody>
+    {% if sa != 0 %}
+    <tr>
+        <td>{{ sa[2] }}</td>
+        <td>{{ sa.sum_hour_worked }}h</td>
+        <td>{{ ov }}</td>
+        <td>{{ "{:,.1f}".format(sa.sum_salary) }}</td>
+        <td>{{ "{:,.1f}".format(sa.tax_bao_hiem) }}</td>
+        <td>{{ "{:,.1f}".format(sa.tax_thu_nhap) }}</td>
+        <td>{{ "{:,.1f}".format(sa.tam_ung) }}</td>
+        <td>{{ "{:,.1f}".format(sa.net_salary) }}</td>
+    </tr>
+    {% else %}
+    {% endif %}
+</tbody>
+</table>
+<div id="pagination"></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

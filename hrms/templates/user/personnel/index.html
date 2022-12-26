@@ -1,0 +1,41 @@
+<style>
+.list-group-item {
+    border:solid 2px black;
+}
+
+
+.list-group-hover .list-group-item:hover {
+    background-color: #f5f5f5;
+}
+.list-group a {
+    height: 60px;
+    font-weight: bold;
+    color: #333;
+    background: #97DECE;
+    position: relative;
+
+
+}
+.list-group a::after{
+    content: "";
+    height: 60px;
+    width: 0px;
+    background: #285430;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    transition: all 0.5s ease-in-out;
+    opacity: 0.27;
+}
+.list-group a:hover::after{
+    width: 100%;
+}
+</style>
+
+<div class="list-group mt-3">
+    <a href="/home" class="list-group-item text-center"><span style="font-size: 25px">Quản lý</span></a>
+    <a href="/employeeboard" class="list-group-item">Danh sách nhân viên</a>
+    <a href="/checkinboard" class="list-group-item">Danh sách chấm công</a>
+    <a href="/contractboard" class="list-group-item">Danh sách hợp đồng</a>
+    <a href="/employeeleaveboard" class="list-group-item">Danh sách nghỉ việc</a>
+</div>

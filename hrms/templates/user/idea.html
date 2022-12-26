@@ -1,0 +1,135 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} {{ current_user.username }} {% endblock %}
+
+{% block content %}
+<div class="col-md-12 col-lg-12">
+
+    <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Danh sách ý kiến, đề xuất</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr>
+
+    <!--Insert contract-->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ideaModal">
+        Thêm đề xuất
+    </button>
+    <br><br>
+    <!-- The Modal -->
+    <div class="modal" id="ideaModal" style="z-index: 10000000000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Thông tin đề xuất</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="post" action="{{ url_for('create_idea') }}">
+                    <div class="form-group mt-3">
+                        <label for="create_date">Ngày</label>
+                        <input type="date" class="form-control" id="create_date" name="create_date" placeholder="Nhập ngày ..." required>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <label class="mr-2">Loại đề xuất</label>
+                            <select class="form-control select2" style="width:300px !important;" name="idea_type_id">
+                                {% for idea_type in list_idea_type %}
+                                    <option value="{{ idea_type.id }}">{{ idea_type.id }} - {{ idea_type.idea_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <script>
+                        $('.select2').select2();
+                    </script>
+
+                    <div class="form-group">
+                        <label for="detail_content">Nội dung chi tiết</label>
+                        <textarea style="height: 250px" type="text" class="form-control" id="detail_content" name="describe" placeholder="Nhập lương nội dung/đường dẫn file..."></textarea>
+                    </div>
+                    <input type="submit" value="Thêm" class="btn btn-info">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% if err_msg is defined and err_msg %}
+        <div class="alert alert-warning">{{ err_msg }}</div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <table id="myTable" class="table table-striped table-bordered table-sm">
+    <thead>
+        <th>Ngày</th>
+        <th>Loại đề xuất</th>
+        <th>Nội dung chi tiết</th>
+        <th>Trạng thái</th>
+        <th>#</th>
+    </thead>
+    <tbody>
+    {% for idea in ideas %}
+        <tr>
+            <td> {{ idea.create_at }} </td>
+            <td> {{ idea.idea_name }} </td>
+            <td> {{ idea.describe }} </td>
+            {% if idea.active == 1 %}
+            <td><span class="badge badge-pill badge-info">{{ idea.active_name }}</span></td>
+            {% elif idea.active == 2 %}
+            <td><span class="badge badge-pill badge-success">{{ idea.active_name }}</span></td>
+            {% else %}
+            <td><span class="badge badge-pill badge-danger">{{ idea.active_name }}</span></td>
+            {% endif %}
+            <td style="width: 10%">
+                <button type="button" class="btn btn-warning">
+                    <a href="/user/deleteidea/{{idea.id}}" style="color: #333" class="deleteIdea"><i class="fa-solid fa-trash-can"></i></a>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div id="pagination"></div>
+<script>
+    const del = document.querySelectorAll('.deleteIdea');
+    if(del) {
+        const array = Array.from(del);
+        array.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                if(!confirm('Bạn có chắc chắn muốn xóa ý kiến ?')){
+                    e.preventDefault();
+                }
+            });
+        })
+    }
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

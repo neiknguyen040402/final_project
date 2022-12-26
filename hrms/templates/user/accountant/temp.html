@@ -1,0 +1,29 @@
+<div class="mt-3">
+        <h4>Thông tin lương của {{ emp.full_name }}</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Mã nhân viên</th>
+                    <th>Họ và tên</th>
+                    <th>Lương tháng</th>
+                    <th>Lương trước thuế</th>
+                    <th>Thuế thu nhập cá nhân</th>
+                    <th>Bảo hiểm</th>
+                    <th>Thực lãnh</th>
+                    <th>Ngày chấm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ emp.id }}</td>
+                    <td>{{ emp.full_name }}</td>
+                    <td>{{ month }} / {{ year }}</td>
+                    <td>{{ salary_no_tax }}</td>
+                    <td>{{ TAX_TNCN }}</td>
+                    <td>{{ BH }}</td>
+                    <td>{{ net_salary }}</td>
+                    <td>{{ create_at }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

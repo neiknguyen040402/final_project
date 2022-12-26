@@ -1,0 +1,83 @@
+{% extends 'layout/base.html' %}
+
+{% block style %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<style>
+
+
+    .select2-container .select2-selection--single{
+        height:34px !important;
+        width:300px;
+    }
+    .select2-container--default .select2-selection--single{
+        border: 1px solid #ccc !important;
+        border-radius: 0px !important;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-2 col-md-12">
+        <div class="list-group">
+            {% include 'user/personnel/index.html' %}
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-auto">
+        <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Danh sách hợp đồng</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr> <br>
+        {% if err_msg is defined and err_msg %}
+            <div class="alert alert-warning">{{ err_msg }}</div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <table id="myTable" class="table table-hover table-sm table-bordered">
+        <thead>
+            <tr>
+                <th>Mã hợp đồng</th>
+                <th>Họ và tên</th>
+                <th>Loại hợp đồng</th>
+                <th>Người lập hợp đồng</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+
+            <tr>
+                <td>{{ contract.contract_id }}</td>
+                <td>{{ contract.full_name }}</td>
+                <td>{{ contract.type }}</td>
+                <td>{{ contract.create_by }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+    </div>
+    <div id="pagination"></div>
+</div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

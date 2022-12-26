@@ -1,0 +1,60 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+    <form method="post" action="">
+        <div class="form-group">
+            <label for="fullname1">Họ tên</label>
+            <input type="text" class="form-control" id="fullname1" name="full_name" value="{{ em.full_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="date_of_birth1">Ngày sinh</label>
+            <input type="date" class="form-control" id="date_of_birth1" name="date_of_birth" value="{{ em.date_of_birth }}">
+        </div>
+        <div class="form-group">
+            <label for="gender1">Giới tính</label>
+            <select id="gender1" class="form-control" name="gender">
+                <option selected value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="phone1">Số điện thoại</label>
+            <input type="text" class="form-control" id="phone1" name="phone" value="{{ em.phone }}">
+        </div>
+        <div class="form-group">
+            <label for="address1">Địa chỉ</label>
+            <input type="text" class="form-control" id="address1" name="address" value="{{ em.address }}">
+        </div>
+        <div class="form-group">
+            <label for="start_day1">Ngày bắt đầu</label>
+            <input type="date" class="form-control" id="start_day1" name="start_day" value="{{ em.start_day }}">
+        </div>
+        <div class="form-group">
+            <label for="license1">Bằng lái xe</label>
+            <input type="text" class="form-control" id="license1" name="license" value="{{ em.license }}">
+        </div>
+        <div class="form-group">
+            <label for="CCCD1">Số CCCD/CMND</label>
+            <input type="number" class="form-control" id="CCCD1" name="CCCD" value="{{ em.CCCD }}">
+        </div>
+        <div class="form-group">
+            <label for="bank_account1">Số tài khoản ngân hàng</label>
+            <input type="text" class="form-control" id="bank_account1" name="bank_account" value="{{ em.bank_account }}">
+        </div>
+        <div class="form-group">
+            <label for="department_id1">Mã phòng ban</label>
+            <select id="department_id1" class="form-control" name="department_id">
+                <option selected value="1">1-Phòng nhân sự</option>
+                <option value="2">2-Phòng kế toán</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="position_id1">Mã chức vụ</label>
+            <select id="position_id1" class="form-control" name="position_id">
+                <option selected value="NV01">NV01-Nhân viên</option>
+            </select>
+        </div>
+        <input type="submit" value="Cập nhật" class="btn-info">
+    </form>
+<br> <br> <br> <br>
+{% endblock %}

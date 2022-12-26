@@ -1,0 +1,68 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-2 col-md-12">
+        <div class="list-group">
+            {% include 'user/personnel/index.html' %}
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-auto">
+        <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Bảng chấm công chi tiết</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr> <br>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <table id="myTable" class="table table-hover table-sm table-bordered" >
+        <thead>
+            <tr>
+                <th>Mã nhân viên</th>
+                <th>Họ và tên</th>
+                <th>Ngày</th>
+                <th>Giờ vào</th>
+                <th>Giờ ra</th>
+                <th>Thời gian làm việc</th>
+                <th>Tăng ca</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for checkin in checkinlist %}
+
+            <tr>
+                <td>{{ checkin.id }}</td>
+                <td>{{ checkin.full_name }}</td>
+                <td>{{ checkin.date }}</td>
+                <td>{{ checkin[3] }}:{{ checkin[4] }}:{{ checkin[5] }}</td>
+                <td>{{ checkin[6] }}:{{ checkin[7] }}:{{ checkin[8] }}</td>
+                <td>{{ checkin.hour_worked }}</td>
+                <td>{{ checkin.hour_over }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+    </div>
+    <div id="pagination"></div>
+</div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

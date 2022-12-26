@@ -1,0 +1,59 @@
+div.col-md-4 {
+    border: 1px solid black;
+    position: absolute;
+    border-radius: 10px;
+    background-color: white;
+    transform: translate(-50%,-60%);
+    top: 50%;
+    left: 50%;
+    padding: 36px 42px;
+}
+
+input {
+    width:100%;
+    padding: 10px 10px;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+.back {
+    text-align:center;
+}
+
+.back > a {
+    color:black;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group > span {
+    position: absolute;
+    right: 15px;
+    transform: translateY(-133%);
+    font-size: 17px;
+    color: black;
+    cursor: pointer;
+    display: none;
+}
+
+.form-group > #pass:valid ~ span{
+    display: block;
+}
+
+.form-group span i.hide-btn::before{
+    content: "\f070";
+}
+
+#submit {
+    padding:10px 10px;
+    cursor: pointer;
+    background: red;
+    color: white;
+    font-size: 17px;
+}
+
+#submit:hover {
+    background: #990909;
+}

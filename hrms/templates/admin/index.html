@@ -1,0 +1,145 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+    {% if current_user.is_authenticated %}
+    <div style="background: #EAFDFC" >
+        <h1>Tổng quan</h1>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <style>
+          .element{
+              position: absolute;
+              top: 180px;
+              left: 90px;
+          }
+
+          .single_element .single_quick_activity:nth-child(2) {
+              background: #63c7ff;
+          }
+
+          .single_element .single_quick_activity {
+              background-color: #fff;
+              border-radius: 10px;
+              -webkit-transition: .5s;
+              transition: .5s;
+              padding: 50px 30px;
+              background: #3b76ef;
+              width: 60%;
+              margin-left: 70px;
+              margin-top: 30px;
+          }
+        </style>
+        <div class="single_element">
+          <div class="quick_activity">
+            <div class="row">
+              <div class="col-12">
+                <div class="quick_activity_wrap">
+                  <div class="row">
+                    <div style="text-align:center;" class="col-6">
+                      <div class="single_quick_activity">
+                        <span style="font-size: 40px">{{sum_num_em[0]}}</span>
+                        <h6><span class="ml-3"><a href="http://127.0.0.1:5000/admin/employee/" style="color: #333">Nhân viên</a></span></h6>
+                      </div>
+
+                      <div class="single_quick_activity mt-4" style="background-color: #a66dd4">
+                        <span style="font-size: 40px">{{sum_num_de[0]}}</span>
+                        <h6><span class="ml-3"><a href="http://127.0.0.1:5000/admin/department/" style="color: #333">Phòng ban</a></span></h6>
+                      </div>
+
+                      <div class="single_quick_activity mt-4 mb-4" style="background-color: #FF8E9E;">
+                        <span style="font-size: 40px">{{sum_num_acc_active[0]}} / {{sum_num_acc[0]}}</span>
+                        <h6><span class="ml-3"><a style="color: #333" href="http://127.0.0.1:5000/admin/account/">Tài khoản người dùng</a></span></h6>
+                      </div>
+                    </div>
+
+                    <div style="background: white; text-align:center; width: 80% !important; height: 80%" class="col-5 p-5" >
+                        <canvas id="myDepartmentChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            let labels = [], info = []
+
+            {% for num in count_em_in_de %}
+                labels.push('{{ num[0] }}')
+                info.push({{ num[1] }})
+            {% endfor %}
+
+            window.onload = function() {
+                const ctx = document.getElementById('myDepartmentChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                      labels: labels,
+                      datasets: [{
+                        label: 'Thống kê số nhân viên theo phòng',
+                        data: info,
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                });
+            }
+        </script>
+
+    </div>
+    {% else %}
+        <br>
+<div style="display:flex;" class="content">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <h1 class="text-center text-danger">Đăng nhập</h1>
+    <br>
+    {% if err_msg %}
+        <div class="alert alert-danger">
+            <p>{{ err_msg }}</p>
+        </div>
+    {% endif %}
+    <div class="form">
+        <form method="post" action="{{ url_for('signin_admin') }}">
+        <div class="form-group">
+            <label for="username">Username</label> <br>
+            <input type="text"  id="username" name="username" placeholder="Nhập username ..." required>
+        </div>
+        <div class="form-group">
+            <label for="pass">Mật khẩu</label> <br>
+            <input type="password"  id="pass" name="password" placeholder="Nhập password ..." required><span class="show-btn"><i class="fas fa-eye"></i></span>
+        </div>
+        <br> <br>
+        <input id="submit" type="submit" value="Đăng nhập">
+    </form>
+    </div> <br>
+</div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<script>
+    const passField = document.querySelector("#pass");
+    const showBtn = document.querySelector("span i");
+    showBtn.onclick = (()=> {
+        if(passField.type == "password") {
+            passField.type = "text";
+            showBtn.classList.add("hide-btn");
+        } else {
+            passField.type = "password";
+            showBtn.classList.remove("hide-btn");
+        }
+    });
+</script>
+    {% endif %}
+{% endblock %}

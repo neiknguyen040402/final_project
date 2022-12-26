@@ -1,0 +1,250 @@
+body {
+    background:#e7e7e7;
+}
+
+li {
+    list-style: none;
+}
+
+.navbar{
+    min-height: 50px !important;
+    margin-bottom:0;
+    border-radius:0;
+}
+  
+.navbar-nav > a.navbar-brand {
+    padding-top:6px !important;
+    padding-bottom:0 !important;
+    height: 50px;
+}
+  
+.navbar-default {
+    background-color: black;
+    border-color: black;
+}
+
+.navbar-header > a.navbar-brand {
+    position: relative;
+    font-weight: bold;
+    color: white;
+    font-size: 22px;
+}
+
+.navbar-header > a.navbar-brand:hover {
+    color: red;
+}
+
+.navbar-collapse > ul.navbar-nav > li a {
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.navbar-collapse > ul.navbar-nav > li a:hover {
+    color: red;
+}
+
+.navbar-collapse > ul.navbar-nav > li a.hold:before {
+    content: "";
+    height: 2.7px;
+    width: 0px;
+    background-color: red;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    transition: 0.27s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar-collapse > ul.navbar-nav > li a.hold {
+    position: relative;
+}
+
+.navbar-collapse > ul.navbar-nav > li:hover a.hold::before {
+    width: 100%;
+}
+
+.navbar-collapse > ul.navbar-nav > li.dropdown > a.dropbtn:before {
+    content: "";
+    height: 2.7px;
+    width: 0px;
+    background-color: red;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    transition: 0.27s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar-collapse > ul.navbar-nav > li.dropdown > a.dropbtn {
+    position: relative;
+}
+
+.navbar-collapse > ul.navbar-nav > li.dropdown:hover a.dropbtn::before {
+    width: 100%;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: black;
+    min-width: 170px;
+    border-radius: 5px;
+    border: 1px solid rgb(170, 170, 170);
+    z-index: 99999;
+}
+
+  
+.dropdown-content a {
+    color: black;
+    padding: 12px 17px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropdown-content a:hover {
+    color: #ff0000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.col-md-2 > div.list-group > a.list-group-item {
+    background-color: white;
+    border: 1px solid rgb(170, 170, 170);
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align:justify;
+}
+
+.col-md-2 > div.list-group > a.list-group-item:hover {
+    color: #ff0000;
+    background-color: black;
+}
+
+.panel > div.panel-heading {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.panel-default > div.panel-body > p {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.panel-default > div.panel-body > div.timkiem > #myInput {
+    border: 1px solid grey;
+    border-radius: 15px;
+    width: 100%;
+    padding: 15px 30px;
+}
+
+#clock {
+    text-align: end;
+    font-size: 17px;
+    font-weight: bold;
+    color: red;
+}
+
+.chamcong {
+    text-align: center;
+}
+
+.chamcong a {
+    font-size: 17px;
+    color: white;
+    border: 1px solid grey;
+    padding: 10px 30px;
+    text-decoration: none;
+    background-color: rgb(50, 100, 270);
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.chamcong a:hover {
+    background-color: rgb(50, 100, 170);
+}
+
+#myTable thead {
+    font-size: 17px;
+    background-color: black;
+    color: white;
+}
+
+#myTable tbody {
+    background-color: white;
+    color: black;
+}
+
+#myTable th {
+    padding: 15px 0px;
+    text-align: center;
+}
+
+#myTable td {
+    padding: 15px 5px;
+}
+
+.pg-normal {
+    color: black;
+    font-weight: normal;
+    text-decoration: none;  
+    cursor: pointer;  
+    font-weight: bold;
+    text-align: center;
+}
+  
+.pg-selected {
+    color: red;
+    font-weight: bold;     
+    text-decoration: underline;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+}
+
+.back {
+    text-align: center;
+}
+
+.back > a {
+    color: red;
+}
+
+#footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    padding: 42px 0px;
+    position: sticky;
+    z-index: 9999;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 99999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

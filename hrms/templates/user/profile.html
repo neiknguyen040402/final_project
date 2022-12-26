@@ -1,0 +1,257 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} {{ current_user.username }} {% endblock %}
+
+{% block content %}
+        <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Thông tin cá nhân: {{ current_user.username }}</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:96px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr>
+
+    {% if err_msg is defined and err_msg %}
+        <div class="alert alert-warning">{{ err_msg }}</div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <hr>
+    <div style="background-color: #f7f4ea; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 4px;" class="pb-3">
+        <h5 class="pl-3 pt-3">Mã nhân viên: {{employee.id}}</h5>
+        <div class="row">
+
+            <div class="col-3 col-md-3">
+                <div class="avatar">
+                    <div class="image mt-3 ml-4">
+                        {% if employee.avatar %}
+                            <img class="rounded-circle" src="{{ employee.avatar }}" width="85%" alt="avatar">
+                        {% else %}
+                            <img class="rounded-circle" src="{{ url_for('static', filename='images/user.png') }}" width="150" alt="avatar">
+                        {% endif %}
+                    </div>
+                    <br> <br>
+                </div>
+            </div>
+            <div class="col col-md">
+                <div style="background-color: white; width:90%; height: 100%" class="pl-3 pt-2">
+                    <p>Họ và tên : <span>{{employee.full_name}}</span></p>
+
+                    <p>Giới tính : <span>{{employee.gender}}</span></p>
+
+                    <p>Ngày sinh : <span>{{employee.date_of_birth}}</span></p>
+
+                    <p>Địa chỉ : <span>{{employee.address}}</span></p>
+
+                    <p>Số CMND : <span>{{employee.CCCD}}</span></p>
+
+                    <p>Bằng lái xe : <span>{{employee.license}}</span></p>
+
+                    <p>Tài khoản ngân hàng : <span>{{employee.bank_account}}</span></p>
+
+                    <p>Quốc tịch : <span>Việt Nam</span></p>
+
+                    <p>Dân tộc: <span>Kinh</span></p>
+
+                    <p>Tôn giáo : <span>không</span></p>
+                </div>
+
+
+            </div>
+            <div class="col">
+                <div style="background-color: white; width:90%; height: 100%" class="pl-3 pt-2">
+                    <p>Tên tài khoản : <span>{{employee.username}}</span></p>
+
+                <p>Email : <span>{{employee.email}}</span></p>
+
+                <p>Số điện thoại : <span>{{employee.phone}}</span></p>
+
+                <p>Phòng ban : <span>{{employee.department_name}}</span></p>
+
+                <p>Chức vụ : <span>{{employee.position_name}}</span></p>
+
+                <p>Trình độ : <span>{{employee.muc_trinh_do}}</span></p>
+
+                <p>Chuyên môn : <span>{{employee.chuyen_nganh}}</span></p>
+
+                {% if employee.active == True %}
+                    <p>Trạng thái: <span class="badge badge-info">Đang làm việc</span></p>
+                {% else %}
+                    <p>Trạng thái: <span class="badge badge-danger">Đang tạm nghỉ</span></p>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div style="display: flex;">
+    <!--update profile-->
+    <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#myModal">
+        Cập nhật
+    </button>
+    <br><br>
+    <!-- The Modal -->
+    <div class="modal" id="myModal" style="z-index: 10000000000000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhật thông tin</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="post" action="{{ url_for('user_updateprofile', username = current_user.username) }}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="fullname1">Họ tên</label>
+                        <input type="text" class="form-control" id="fullname1" name="full_name" value="{{ employee.full_name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_birth1">Ngày sinh</label>
+                        <input type="date" class="form-control" id="date_of_birth1" name="date_of_birth" value="{{ employee.date_of_birth }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender1">Giới tính</label>
+                        <select id="gender1" class="form-control" name="gender">
+                            <option selected value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone1">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone1" name="phone" value="{{ employee.phone }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address1">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address1" name="address" value="{{ employee.address }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="license1">Bằng lái xe</label>
+                        <input type="text" class="form-control" id="license1" name="license" value="{{ employee.license }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="CCCD1">Số CCCD/CMND</label>
+                        <input type="number" class="form-control" id="CCCD1" name="CCCD" value="{{ employee.CCCD }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_account1">Số tài khoản ngân hàng</label>
+                        <input type="text" class="form-control" id="bank_account1" name="bank_account" value="{{ employee.bank_account }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Ảnh đại diện</label>
+                        <input type="file" class="form-control" id="avatar" name="avatar">
+                    </div>
+                    <input type="submit" value="Cập nhật" class="btn btn-info">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<!--update password-->
+    <button type="button" class="btn btn-danger mt-3 ml-3" data-toggle="modal" data-target="#passModal">
+        Đổi mật khẩu
+    </button>
+    <br><br>
+    <!-- The Modal -->
+    <div class="modal" id="passModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Đổi mật khẩu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="post" action="{{url_for('user_updateppass', username = current_user.username)}}">
+                    <div class="form-group">
+                        <label for="currentPass">Mật khẩu hiện tại</label>
+                        <input id="pass1" type="password" class="form-control" id="currentPass" name="currentPass" placeholder="Nhập mật khẩu cũ..." required><span id="icon1" class="show-btn"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPass">Mật khẩu mới</label>
+                        <input id="pass2" type="password" class="form-control" id="newPass" name="newPass" placeholder="Nhập mật khẩu mới..." required><span id="icon2" class="show-btn"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPass">Xác nhận mật khẩu</label>
+                        <input id="pass3" type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="Xác nhận mật khẩu..." required><span id="icon3" class="show-btn"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <input type="submit" value="Xác nhận" class="btn btn-info">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<script>
+    const passField1 = document.querySelector("#pass1");
+    const showBtn1 = document.querySelector("#icon1 i");
+    showBtn1.onclick = (()=> {
+        if(passField1.type == "password") {
+            passField1.type = "text";
+            showBtn1.classList.add("hide-btn");
+        } else {
+            passField1.type = "password";
+            showBtn1.classList.remove("hide-btn");
+        }
+    });
+
+    const passField2 = document.querySelector("#pass2");
+    const showBtn2 = document.querySelector("#icon2 i");
+    showBtn2.onclick = (()=> {
+        if(passField2.type == "password") {
+            passField2.type = "text";
+            showBtn2.classList.add("hide-btn");
+        } else {
+            passField2.type = "password";
+            showBtn2.classList.remove("hide-btn");
+        }
+    });
+
+    const passField3 = document.querySelector("#pass3");
+    const showBtn3 = document.querySelector("#icon3 i");
+    showBtn3.onclick = (()=> {
+        if(passField3.type == "password") {
+            passField3.type = "text";
+            showBtn3.classList.add("hide-btn");
+        } else {
+            passField3.type = "password";
+            showBtn3.classList.remove("hide-btn");
+        }
+    });
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/password.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+{% endblock %}

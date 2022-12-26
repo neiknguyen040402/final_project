@@ -1,0 +1,184 @@
+<!DOCTYPE html> 
+<html lang="vi" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+   
+    <link rel="stylesheet" href="static/css/manager_manu.css">
+    <!-- Boxiocns CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .element{
+          position: absolute;
+          top: 180px;
+          left: 90px;
+      }
+
+      .single_element .single_quick_activity:nth-child(2) {
+          background: #63c7ff;
+      }
+
+      .single_element .single_quick_activity {
+          background-color: #fff;
+          border-radius: 10px;
+          -webkit-transition: .5s;
+          transition: .5s;
+          padding: 50px 30px;
+          background: #3b76ef;
+      }
+    </style>
+
+   </head>
+
+<body onload="time()">
+  <div class="sidebar close">
+
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">KKL</span>
+    </div>
+
+    <ul class="nav-links">
+
+      <li>
+        <a href="/home">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="/home">Dashboard</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-collection' ></i>
+            <span class="link_name">Tài khoản</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Tài khoản</a></li>
+          <li><a href="/manager/accountboard">Danh sách tài khoản</a></li>
+          <li><a href="/manager/createaccount">Thêm mới tài khoản</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-book-alt' ></i>
+            <span class="link_name">Danh mục</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Danh mục</a></li>
+          <li><a href="/manager/employeeboard">Danh sách nhân viên</a></li>
+          <li><a href="/manager/positionboard">Danh sách chức vụ</a></li>
+          <li><a href="/manager/checkinboard">Danh sách chấm công</a></li>
+          <li><a href="/manager/salaryboard">Danh sách lương</a></li>
+          <li><a href="/manager/ideaboard">Danh sách ý kiến</a></li>
+          <li><a href="/manager/contractboard">Danh sách hợp đồng</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class="fa-solid fa-users"></i>
+            <span class="link_name">Nhân sự</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Nhân sự</a></li>
+          <li><a href="/manager/createemployee">Lập hồ sơ</a></li>
+          <li><a href="/manager/createcontract">Lập hợp đồng</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <section class="home-section">
+    <div>
+        {% include 'layout/header.html' %}
+    </div>
+
+      <div class="col-lg-12 col-md-auto">
+        <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Tổng quan</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr> <br>
+        <div class="single_element">
+          <div class="quick_activity">
+            <div class="row">
+              <div class="col-12">
+                <div class="quick_activity_wrap">
+                  <div class="row">
+                    <div style="text-align:center;" class="col-6">
+                      <div class="single_quick_activity">
+                        <h3><i class="fa-solid fa-users"></i><span class="ml-3"><a href="/manager/employeeboard" style="color: #333">Số lượng nhân viên: {{count_em_all[0]}}</a></span></h3>
+                        <p>Đang làm việc: {{count_em_active[0]}} / {{count_em_all[0]}}</p>
+                      </div>
+
+                      <div class="single_quick_activity mt-4" style="background-color: #a66dd4">
+                        <h3><i class="fa-solid fa-user-plus"></i><span class="ml-3"><a href="/manager/createemployee" style="color: #333">Thêm mới nhân viên</a></span></h3>
+                        <p>Tháng này có 3 nhân viên mới được thêm</p>
+                      </div>
+                    </div>
+
+                    <div style="text-align:center;" class="col-6">
+                      <div class="single_quick_activity" style="background-color: #63c7ff;">
+                        <h3><i class="fa-solid fa-paper-plane"></i><span class="ml-3"><a style="color: #333" href="/manager/ideaboard">Đề xuất ý kiến</a></span></h3>
+                        <p>Có {{count_ideas[0]}} đề xuất chờ duyệt</p>
+                      </div>
+
+                      <div class="single_quick_activity mt-4" style="background-color: #6dd4b1">
+                        <h3><i class="fa-solid fa-cake-candles"></i><span class="ml-3">Sinh nhật</span></h3>
+
+                        <p>Tháng này có sinh nhật của 2 nhân viên</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+   arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".logo-details");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+  </script>
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+
+</body>
+</html>

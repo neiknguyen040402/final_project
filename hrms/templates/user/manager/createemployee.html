@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/manager_manu.css') }}">
+    <!-- Boxiocns CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+
+<body onload="time()">
+  <div class="sidebar close">
+
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">KKL</span>
+    </div>
+
+    <ul class="nav-links">
+
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Dashboard</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-collection' ></i>
+            <span class="link_name">Tài khoản</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Tài khoản</a></li>
+          <li><a href="/manager/accountboard">Danh sách tài khoản</a></li>
+          <li><a href="/manager/createaccount">Thêm mới tài khoản</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-book-alt' ></i>
+            <span class="link_name">Danh mục</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Danh mục</a></li>
+          <li><a href="/manager/employeeboard">Danh sách nhân viên</a></li>
+          <li><a href="/manager/positionboard">Danh sách chức vụ</a></li>
+          <li><a href="/manager/checkinboard">Danh sách chấm công</a></li>
+          <li><a href="/manager/salaryboard">Danh sách lương</a></li>
+          <li><a href="/manager/ideaboard">Danh sách ý kiến</a></li>
+          <li><a href="/manager/contractboard">Danh sách hợp đồng</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class="fa-solid fa-users"></i>
+            <span class="link_name">Nhân sự</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Nhân sự</a></li>
+          <li><a href="/manager/createemployee">Lập hồ sơ</a></li>
+          <li><a href="/manager/createcontract">Lập hợp đồng</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <section class="home-section">
+    <div>
+        {% include 'layout/header.html' %}
+    </div>
+
+
+    <div class="col-lg-12 col-md-auto" style="background-color: white" >
+         <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Lập hồ sơ</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('create_employee_manager') }}" class="pr-4 pl-4">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="full_name">Tên nhân viên</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nhập họ và tên ..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_birth">Ngày sinh</label>
+                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Nhập ngày sinh ..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Giới tính</label>
+                        <input type="text" class="form-control" id="gender" name="gender" placeholder="Nhập giới tính ..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ ..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dantoc">Dân tộc</label>
+                        <input type="text" class="form-control" id="dantoc" placeholder="Nhập dân tộc...">
+                    </div>
+                    <div class="form-group">
+                        <label for="tongiao">Tôn giáo</label>
+                        <input type="text" class="form-control" id="tongiao" placeholder="Nhập tôn giáo...">
+                    </div>
+                    <input type="submit" value="Thêm" class="btn btn-danger mt-4">
+                </div>
+
+                <div class="col">
+
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email...">
+                    </div>
+                    <div class="form-group">
+                        <label for="license">Bằng lái xe</label>
+                        <input type="text" class="form-control" id="license" name="license" placeholder="Nhập bằng lái xe ...">
+                    </div>
+                    <div class="form-group">
+                        <label for="CCCD">Số CCCD/CMND</label>
+                        <input type="number" class="form-control" id="CCCD" name="CCCD" placeholder="Nhập số CCCD/CMND ...">
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_account">Số tài khoản ngân hàng</label>
+                        <input type="text" class="form-control" id="bank_account" name="bank_account" placeholder="Nhập số tài khoản ngân hàng ...">
+                    </div>
+                    <div class="form-group">
+                        <label for="department_id">Mã phòng ban</label>
+                        <select id="department_id" class="form-control" name="department_id">
+                            <option selected value="1">1-Phòng nhân sự</option>
+                            <option value="2">2-Phòng kế toán</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="position_id">Mã chức vụ</label>
+                        <select id="position_id" class="form-control" name="position_id">
+                            <option selected value="NV01">NV01-Nhân viên</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    <br><br>
+    </div>
+  </section>
+
+  <script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+   arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".logo-details");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+  </script>
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+</body>
+</html>

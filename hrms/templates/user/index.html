@@ -1,0 +1,91 @@
+{% if current_user.is_authenticated and position.startswith("NV") and ( de == 1 or de == 2 ) %}
+
+    {% extends 'layout/base.html' %}
+    {% block title %}Trang chủ{% endblock %}
+    {% block content %}
+
+    <style>
+      .element{
+          position: absolute;
+          top: 180px;
+          left: 90px;
+      }
+
+      .single_element .single_quick_activity:nth-child(2) {
+          background: #63c7ff;
+      }
+
+      .single_element .single_quick_activity {
+          background-color: #fff;
+          border-radius: 10px;
+          -webkit-transition: .5s;
+          transition: .5s;
+          padding: 50px 30px;
+          background: #3b76ef;
+      }
+    </style>
+        <div class="row">
+            <div class="col-lg-2 col-md-12" >
+                <br>
+                <div class="list-group">
+                    {% if de == 1 %}
+                        {% include 'user/personnel/index.html' %}
+                    {% elif de == 2 %}
+                        {% include 'user/accountant/index.html' %}
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-10 col-md-auto">
+                <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Quản lý</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+                <hr> <br>
+                <div class="single_element">
+                  <div class="quick_activity">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="quick_activity_wrap">
+                          <div class="row">
+                            <div style="text-align:center;" class="col-6">
+                              <div class="single_quick_activity">
+                                <h3><i class="fa-solid fa-sack-dollar"></i><span class="ml-3"><a href="{{ url_for('user_salary') }}" style="color: #333">Lương</a></span></h3>
+                              </div>
+
+                              <div class="single_quick_activity mt-4" style="background-color: #a66dd4">
+                                <h3><i class="fa-solid fa-clock"></i><span class="ml-3"><a href="{{ url_for('user_checkin') }}" style="color: #333">Chấm công</a></span></h3>
+
+                              </div>
+                            </div>
+
+                            <div style="text-align:center;" class="col-6">
+                              <div class="single_quick_activity" style="background-color: #63c7ff;">
+                                <h3><i class="fa-solid fa-envelope"></i><span class="ml-3"><a style="color: #333" href="{{ url_for('user_idea') }}">Đề xuất ý kiến</a></span></h3>
+
+                              </div>
+
+                              <div class="single_quick_activity mt-4" style="background-color: #6dd4b1">
+                                  <h3><i class="fa-solid fa-clipboard-list"></i><span class="ml-3"><a style="color: #333" href="{{ url_for('form') }}">Biểu mẫu</a></span></h3>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+    {% endblock %}
+
+{% elif current_user.is_authenticated and position.startswith("TP") %}
+    {% include 'user/manager/index.html' %}
+{% else %}
+    {% extends 'layout/base.html' %}
+{% endif %}

@@ -1,0 +1,253 @@
+{% extends 'layout/base.html' %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-2 col-md-12">
+        <div class="list-group">
+            {% include 'user/personnel/index.html' %}
+        </div>
+    </div>
+    <div class="col-lg-10 col-md-auto">
+         <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Danh sách nhân viên</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr>
+        {% if err_msg is defined and err_msg %}
+            <div class="alert alert-warning">{{ err_msg }}</div>
+        {% endif %}
+
+        <div class="row">
+        <div class="col-6">
+            <nav class="navbar navbar-expand-sm navbar-dark">
+              <form class="form-inline" action="{{ url_for('employee_board') }}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword">
+                <button class="btn btn-success" type="submit">Search</button>
+              </form>
+            </nav>
+        </div>
+
+    <!--Insert employee-->
+        <div class="col-6">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="position: absolute; right: 30px; top: 7px">
+            Thêm nhân viên
+        </button>
+        </div>
+        </div>
+        <br>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông tin nhân viên</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" action="{{ url_for('create_employee') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="fullname">Họ tên</label>
+                            <input type="text" class="form-control" id="fullname" name="full_name" placeholder="Nhập họ và tên ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Nhập username ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Mật khẩu</label>
+                            <input type="password" class="form-control" id="pass" name="password" placeholder="Nhập password ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm">Xác nhận mật khẩu</label>
+                            <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Nhập password ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_of_birth">Ngày sinh</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Nhập ngày sinh ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Giới tính</label>
+                            <select id="gender" class="form-control" name="gender">
+                                <option selected value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="start_day">Ngày bắt đầu</label>
+                            <input type="date" class="form-control" id="start_day" name="start_day" placeholder="Nhập số ngày bắt đầu ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="license">Bằng lái xe</label>
+                            <input type="text" class="form-control" id="license" name="license" placeholder="Nhập bằng lái xe ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="CCCD">Số CCCD/CMND</label>
+                            <input type="number" class="form-control" id="CCCD" name="CCCD" placeholder="Nhập số CCCD/CMND ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_account">Số tài khoản ngân hàng</label>
+                            <input type="text" class="form-control" id="bank_account" name="bank_account" placeholder="Nhập số tài khoản ngân hàng ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="department_id">Mã phòng ban</label>
+                            <select id="department_id" class="form-control" name="department_id">
+                                <option selected value="1">1-Phòng nhân sự</option>
+                                <option value="2">2-Phòng kế toán</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="muc_trinh_do">Trình độ</label>
+                            <select id="muc_trinh_do" class="form-control" name="muc_trinh_do">
+                                <option selected value="Đại học">Đại học</option>
+                                <option selected value="Thạc sĩ">Thạc sĩ</option>
+                                <option selected value="Tiến sĩ">Tiến sĩ</option>
+                                <option selected value="Khác">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nganh_dao_tao">Ngành đào tạo</label>
+                            <input type="text" class="form-control" id="nganh_dao_tao" name="nganh_dao_tao" placeholder="Nhập ngành đào tạo ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="chuyen_nganh">Chuyên ngành</label>
+                            <input type="text" class="form-control" id="chuyen_nganh" name="chuyen_nganh" placeholder="Nhập chuyên ngành ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="nam_tot_nghiep">Năm tốt nghiệp</label>
+                            <input type="date" class="form-control" id="nam_tot_nghiep" name="nam_tot_nghiep" placeholder="Nhập năm tốt nghiệp ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="xep_loai">Xếp loại</label>
+                            <input type="text" class="form-control" id="xep_loai" name="xep_loai" placeholder="Nhập xếp loại ...">
+                        </div>
+                        <div class="form-group">
+                            <label for="chung_chi_khac">Chứng chỉ khác</label>
+                            <input type="text" class="form-control" id="chung_chi_khac" name="chung_chi_khac" placeholder="Nhập chứng chỉ khác ...">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="position_id">Mã chức vụ</label>
+                            <select id="position_id" class="form-control" name="position_id">
+                                <option selected value="NV01">NV01-Nhân viên</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="avatar">Ảnh đại diện</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar">
+                        </div>
+                        <input type="submit" value="Thêm" class="btn btn-info">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <table id="myTable" class="table table-hover table-sm table-bordered">
+        <thead>
+            <tr>
+                <th>Mã nhân viên</th>
+                <th>Họ và tên</th>
+                <th>Tên tài khoản</th>
+                <th>Giới tính</th>
+                <th>Chức vụ</th>
+                <th>Tên phòng ban</th>
+                <th>Trạng thái</th>
+                <th>Số điện thoại</th>
+                <th style="width:12%" class="text-center">Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for em in employees %}
+
+            <tr>
+                <td>{{ em.id }}</td>
+                <td>{{ em.full_name }}</td>
+                <td>{{ em.username }}</td>
+                <td>{{ em.gender }}</td>
+                <td>{{ em.position_name }}</td>
+                <td>{{ em.department_name }}</td>
+                <td class="text-center">
+                {% if em.active == True %}
+                    <span class="badge badge-info">ON</span>
+                {% else %}
+                    <span class="badge badge-danger">OFF</span>
+                {% endif %}
+                </td>
+                <td>{{ em.phone }}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <a href="/{{em.id}}/employeedetail" style="color: white;"><i class="fa-solid fa-circle-info"></i></a>
+                    </button>
+
+                    {% if current_user.employee_id == em.create_by %}
+
+                    <button type="button" class="btn btn-warning btn-sm">
+                        <a href="/{{em.id}}/editemployee"><i class="fa-solid fa-pen-to-square"></i></a>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+                        <a href="/{{em.id}}/deleteemployee"><i class="fa-solid fa-xmark"></i></a>
+                    </button>
+
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-sm" disabled><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" disabled><i class="fa-solid fa-xmark"></i></button>
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    <br><br>
+
+
+    </div>
+    <div id="pagination"></div>
+</div>
+
+
+<br><br><br><br>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}
+

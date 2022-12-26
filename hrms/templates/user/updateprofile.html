@@ -1,0 +1,21 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} {{current_user.username}} {% endblock %}
+
+{% block content %}
+    <h1>Chỉnh sửa thông tin cá nhân: {{ current_user.username }}</h1>
+    <table class="table table-striped">
+    <tbody>
+    {% for i in range(1,9) %}
+      <tr>
+        <td>{{ lable[i - 1] }}</td>
+        <td>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{ emp[0][i] }}">
+            </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

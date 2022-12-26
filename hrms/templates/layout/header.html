@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/header_memu.css') }}">
+    <div class="hero">
+        {% if current_user.is_authenticated %}
+        <a style="position:absolute; left: 17px; top: 4px;" class="navbar-brand" href="/home">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="width:40px;">
+        </a>
+        {% else %}
+        <a style="position:absolute; left: 17px; top: 4px;" class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="width:40px;">
+        </a>
+        {% endif %}
+        <nav class="navHeader">
+            {% if current_user.is_authenticated %}
+
+                {% if current_user.avatar %}
+                    <img style="cursor:pointer; text-align:end;" src="{{ current_user.avatar }}" alt="" class="user-pic" onclick="toggleMenu()">
+                {% else %}
+                    <img style="cursor:pointer; text-align:end;" src="{{ url_for('static', filename='images/user.png') }}" class="user-pic" alt="{{ current_user.name }}" onclick="toggleMenu()">
+                {% endif %}
+
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        {% if current_user.avatar %}
+                            <img src="{{ current_user.avatar }}" class="user-pic" alt="{{ current_user.name }} " >
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/user.png') }}" class="user-pic" alt="{{ current_user.name }}">
+                        {% endif %}
+                        <h3>{{current_user.username}}</h3>
+                    </div>
+                    <hr>
+
+
+                    <a href="{{ url_for('user_detail', username=current_user.username) }}" class="sub-menu-link">
+                        <i class="fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                    <a href="{{ url_for('user_salary') }}" class="sub-menu-link">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        Lương
+
+                    </a>
+                    <a href="{{ url_for('user_checkin') }}" class="sub-menu-link">
+                        <i class="fa-solid fa-clock"></i>
+                        Chấm công
+
+                    </a>
+                    <a href="{{ url_for('user_idea') }}" class="sub-menu-link">
+                        <i class="fa-solid fa-envelope"></i>
+                        Đề xuất, ý kiến
+
+                    </a>
+                    <a href="{{ url_for('form') }}" class="sub-menu-link">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        Danh sách biểu mẫu
+
+                    </a>
+                    <a href="{{ url_for('user_signout') }}" class="sub-menu-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <a style="position:absolute; right: 17px; font-size:18px; color:white;" href="{{ url_for('user_signin') }}" class="sub-menu-link">
+
+                Đăng nhập
+
+            </a>
+            {% endif %}
+        </nav>
+
+    </div>
+
+<script>
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu(){
+        subMenu.classList.toggle("open-menu")
+    }
+
+</script>

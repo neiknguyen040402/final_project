@@ -1,0 +1,45 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} {{ current_user.username }} {% endblock %}
+
+
+
+{% block content %}
+<div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Danh sách biểu mẫu</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:96px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr> <br>
+
+<div class="col-md-12 col-lg-12">
+
+    <table id="myTable" class="table table-striped table-bordered">
+    <thead>
+        <th>Mã đơn</th>
+        <th>Tên tệp tin</th>
+        <th>Mô tả</th>
+        <th>Xem nội dung</th>
+        <th>Ngày tải lên</th>
+        <th>Lựa chọn</th>
+    </thead>
+    <tbody>
+    {% for form in forms %}
+        <tr>
+            <td> {{ form.id }} </td>
+            <td> {{ form.file_name }} </td>
+            <td> {{ form.describe }} </td>
+            <td class="text-center"><a href="{{ form.path }}"><i class="fa-solid fa-circle-info fa-2x" style="color: rgb(24, 52, 92);"></i></a></td>
+            <td> {{ form.create_at }} </td>
+            <td class="text-center"><a href="{{ form.download }}"><i class="fa-solid fa-download fa-2x " style="color: rgb(24, 52, 92);"></i></a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div id="pagination"></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

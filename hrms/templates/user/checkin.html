@@ -1,0 +1,119 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} {{ current_user.username }} {% endblock %}
+
+{% block content %}
+<div class="col-md-12 col-lg-12">
+
+    <div style="display:flex;" class="heading">
+             <div class="mb-5">
+             <br>
+            <h1 class="display-5">Bảng chấm công của tôi</h1>
+         </div>
+            <div style="position:absolute; right:50px; top:34px; font-size:20px; color:red;" id="clock"></div></div>
+        <hr>
+
+    {% if err_msg is defined and err_msg %}
+        <div class="alert alert-warning">{{ err_msg }}</div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <style>
+        table, td, th{
+            border: 2px solid #333;
+            border-collapse: collapse;
+        }
+        td, th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+    </style>
+
+    <div class="col-xs-12 mb-3">
+        <form class="form-inline">
+            <div class="form-group mr-2">
+                <input type="number" name="month" min="1" max="12" class="form-control" style="width:200px" placeholder="Nhập tháng ...">
+            </div>
+            <div class="form-group mr-2">
+                <input type="number" name="year" min="2000" class="form-control" style="width:200px" value="2022">
+            </div>
+            <input type="submit" value="Tra cứu" class="btn btn-danger">
+        </form>
+    </div>
+
+    <table id="myTable" style="width:100%;">
+    <thead>
+        <tr>
+            <th style="width: 120px">Mã nhân viên</th>
+            <th>Họ và tên</th>
+            {% for i in range(1, num_date + 1) %}
+            <th style="width:30px;">{{ i }}</th>
+            {% endfor %}
+            <th>Tổng cộng</th>
+            <th>Có phép</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for q in qr %}
+    <tr>
+        <td>{{ q.id }}</td>
+        <td class="pr-1 pl-1"><a href="/{{q.id}}/checkindetail">{{ q.full_name }}</a></td>
+        {% set list = q[3].split(',') %}
+        {% for i in range(1, num_date + 1) %}
+            {% if i in day_off %}
+                <td><span class="badge badge-warning">OFF</span></td>
+            {% elif i|string in list %}
+                {% for q2 in qr2 %}
+                    {% if q2[3] is not none and q2.id == q.id %}
+                        {% set list2 = q2[3].split(',') %}
+                        {% if i|string in list2 %}
+                            <td>P</td>
+                        {% else %}
+                            <td style="background-color: #43ef8b"><i class="fa-solid fa-check"></i></td>
+                        {% endif %}
+                    {% else %}
+                        <td style="background-color: #43ef8b"><i class="fa-solid fa-check"></i></td>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <td>K</td>
+            {% endif %}
+        {% endfor %}
+
+        {% set num_not_allow = 0 %}
+        {% for q2 in qr2 %}
+            {% if q2[3] is not none and q2.id == q.id %}
+                {% set list_not_allow = q2[3].split(',') %}
+                {% set num_not_allow = list_not_allow|length %}
+                <td>{{ list|length - num_not_allow }}</td>
+                <td>{{ num_not_allow }}</td>
+            {% else %}
+                <td>{{ list|length - num_not_allow }}</td>
+                <td>{{ num_not_allow }}</td>
+            {% endif %}
+        {% endfor %}
+
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+</div>
+<div id="pagination"></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagination.css') }}">
+<script src="{{ url_for('static', filename='js/time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pagination.js') }}"></script>
+{% endblock %}

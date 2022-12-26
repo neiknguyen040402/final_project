@@ -1,0 +1,64 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+    <h1 class="text-center mb-5">Thông tin nhân viên chi tiết</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="avatar ml-5">
+                <div class="image">
+                    {% if employee.avatar %}
+                        <img class="rounded-circle" src="{{ employee.avatar }}" width="85%" alt="avatar">
+                    {% else %}
+                        <img class="rounded-circle" src="{{ url_for('static', filename='images/user.png') }}" width="85%" alt="avatar">
+                    {% endif %}
+                </div>
+                <br> <br>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thongtin1 pl-4">
+                <p>Mã nhân viên : <span>{{ employee.id }}</span></p>
+
+                <p>Họ và tên : <span>{{employee.full_name}}</span></p>
+
+                <p>Giới tính : <span>{{employee.gender}}</span></p>
+
+                <p>Ngày sinh : <span>{{employee.date_of_birth}}</span></p>
+
+                <p>Địa chỉ : <span>{{employee.address}}</span></p>
+
+                <p>Số CMND : <span>{{employee.CCCD}}</span></p>
+
+                <p>Bằng lái xe : <span>{{employee.license}}</span></p>
+
+                <p>Tài khoản ngân hàng : <span>{{employee.bank_account}}</span></p>
+                <p>Quốc tịch : <span>Việt Nam</span></p>
+
+                <p>Dân tộc: <span>Kinh</span></p>
+
+                <p>Tôn giáo : <span>không</span></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thongtin1">
+                <p>Tên tài khoản : <span>{{employee.username}}</span></p>
+
+                <p>Email : <span>{{employee.email}}</span></p>
+
+                <p>Số điện thoại : <span>{{employee.phone}}</span></p>
+
+                <p>Phòng ban : <span>{{employee.department_name}}</span></p>
+
+                <p>Chức vụ : <span>{{employee.position_name}}</span></p>
+
+                <p>Trình độ : <span>{{employee.muc_trinh_do}}</span></p>
+
+                <p>Chuyên môn : <span>{{employee.chuyen_nganh}}</span></p>
+
+                <p>Trạng thái : <span>{{employee.active}}</span></p>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
