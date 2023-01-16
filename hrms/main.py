@@ -185,8 +185,12 @@ def user_salary():
     msg = ''
     user = current_user
     employee = Employee.query.filter_by(id=user.employee_id).first()
-    month = request.args.get('month', datetime.now().month - 1)
-    year = request.args.get('year', datetime.now().year)
+    if datetime.now().month == 1:
+        month = request.args.get('month', 12)
+        year = request.args.get('year', datetime.now().year - 1)
+    else:
+        month = request.args.get('month', datetime.now().month - 1)
+        year = request.args.get('year', datetime.now().year)
     sa = utils.get_info_salary(employee.id, month, year)
     ov = utils.get_sum_overtime_in_month(employee.id, month, year)
 
@@ -210,9 +214,12 @@ def user_checkin():
     employee = Employee.query.filter_by(id=user.employee_id).first()
     employee_id = employee.id
 
-
-    month = request.args.get('month', datetime.now().month - 1)
-    year = request.args.get('year', datetime.now().year)
+    if datetime.now().month == 1:
+        month = request.args.get('month', 12)
+        year = request.args.get('year', datetime.now().year - 1)
+    else:
+        month = request.args.get('month', datetime.now().month - 1)
+        year = request.args.get('year', datetime.now().year)
 
     # danh sach ngày đi làm
     qr = db.session.query(Employee.id, Employee.full_name, Position.position_name,
@@ -425,9 +432,12 @@ def employeeDetail(id):
 @app.route('/checkinboard')
 @login_required
 def checkin_board():
-
-    month = request.args.get('month', datetime.now().month - 1)
-    year = request.args.get('year', datetime.now().year)
+    if datetime.now().month == 1:
+        month = request.args.get('month', 12)
+        year = request.args.get('year', datetime.now().year - 1)
+    else:
+        month = request.args.get('month', datetime.now().month - 1)
+        year = request.args.get('year', datetime.now().year)
     qr = db.session.query(Employee.id, Employee.full_name, Position.position_name,
                           func.group_concat(extract('day', Checkin.date).distinct()))\
         .join(Position, Employee.position_id == Position.id)\
@@ -543,7 +553,10 @@ def salary_board():
 @login_required
 def create_salary():
     employee_id = request.args.get('employee_id')
-    month = datetime.now().date().month - 1
+    if datetime.now().month == 1:
+        month = 12
+    else:
+        month = datetime.now().date().month - 1
     year = datetime.now().date().year
 
 
@@ -898,8 +911,12 @@ def checkin_board_manager():
     manager = Employee.query.filter_by(id=manager_account.employee_id).first()
     manager_id = manager.id
 
-    month = request.args.get('month', datetime.now().month - 1)
-    year = request.args.get('year', datetime.now().year)
+    if datetime.now().month == 1:
+        month = request.args.get('month', 12)
+        year = request.args.get('year', datetime.now().year - 1)
+    else:
+        month = request.args.get('month', datetime.now().month - 1)
+        year = request.args.get('year', datetime.now().year)
     qr = db.session.query(Employee.id, Employee.full_name, Position.position_name,
                           func.group_concat(extract('day', Checkin.date).distinct()))\
         .join(Position, Employee.position_id == Position.id)\
